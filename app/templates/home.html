@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <title>SMAN 1 Surakarta DB</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <p class="navbar-brand">SMAN 1 SURAKARTA DB</p>
+        <button class="navbar-toggler" onclick="toggleMenu()">&#9776;</button>
+        <div class="navbar-menu" id="navbarMenu">
+          <div class="nav-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10YWJsZS1wcm9wZXJ0aWVzIj48cGF0aCBkPSJNMTUgM3YxOCIvPjxyZWN0IHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgeD0iMyIgeT0iMyIgcng9IjIiLz48cGF0aCBkPSJNMjEgOUgzIi8+PHBhdGggZD0iTTIxIDE1SDMiLz48L3N2Zz4=" alt="Table Properties Image">
+            <a class="nav-link" href="/">Tables</a>
+          </div>
+          <div class="nav-item">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1maWxlLWNvZGUtMiI+PHBhdGggZD0iTTQgMjJoMTRhMiAyIDAgMCAwIDItMlY3bC01LTVINmEyIDIgMCAwIDAtMiAydjQiLz48cGF0aCBkPSJNMTQgMnY0YTIgMiAwIDAgMCAyIDJoNCIvPjxwYXRoIGQ9Im01IDEyLTMgMyAzIDMiLz48cGF0aCBkPSJtOSAxOCAzLTMtMy0zIi8+PC9zdmc+" alt="File Code Image">
+            <a class="nav-link" href="/sourceCode">Source Code</a>
+          </div>
+        </div>
+        <div class="theme-switch">
+          <label class="switch">
+            <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="hero">
+          <h1>Welcome to SMAN 1 Surakarta DB</h1>
+          <p>Pusat informasi lengkap tentang berbagai data dan tabel yang tersedia.</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableDataSiswa">
+              <div class="card-body">
+                <h5 class="card-title">Table Data Siswa</h5>
+                <p class="card-text">Lihat informasi mengenai data siswa secara detail dan menyeluruh.</p>
+                <a href="/tableDataSiswa" class="btn">View Table Data Siswa</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableDataGuru">
+              <div class="card-body">
+                <h5 class="card-title">Table Data Guru</h5>
+                <p class="card-text">Lihat informasi mengenai data guru secara detail dan menyeluruh.</p>
+                <a href="/tableDataGuru" class="btn">View Table Data Guru</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Kelas</h5>
+                <p class="card-text">Lihat informasi mengenai data kelas secara detail dan menyeluruh.</p>
+                <a href="/tableKelas" class="btn">View Table Kelas</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Mata Pelajaran</h5>
+                <p class="card-text">Lihat informasi mengenai mata pelajaran secara detail dan menyeluruh.</p>
+                <a href="/tableMataPelajaran" class="btn">View Table Mata Pelajaran</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Jadwal</h5>
+                <p class="card-text">Lihat informasi mengenai jadwal secara detail dan menyeluruh.</p>
+                <a href="/tableJadwal" class="btn">View Table Jadwal</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Absensi Siswa</h5>
+                <p class="card-text">Lihat informasi mengenai absensi siswa secara detail dan menyeluruh.</p>
+                <a href="/tableAbsensiSiswa" class="btn">View Table Absensi Siswa</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Absensi Guru</h5>
+                <p class="card-text">Lihat informasi mengenai absensi guru secara detail dan menyeluruh.</p>
+                <a href="/tableAbsensiGuru" class="btn">View Table Absensi Guru</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Nilai</h5>
+                <p class="card-text">Lihat informasi mengenai nilai secara detail dan menyeluruh.</p>
+                <a href="/tableNilai" class="btn">View Table Nilai</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Evaluasi</h5>
+                <p class="card-text">Lihat informasi mengenai evaluasi secara detail dan menyeluruh.</p>
+                <a href="/tableEvaluasi" class="btn">View Table Evaluasi</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://via.placeholder.com/500x300" alt="tableB">
+              <div class="card-body">
+                <h5 class="card-title">Table Pembayaran</h5>
+                <p class="card-text">Lihat informasi mengenai pembayaran secara detail dan menyeluruh.</p>
+                <a href="/tablePembayaran" class="btn">View Table Pembayaran</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 SMAN 1 SURAKARTA DB</p>
+    </footer>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById('navbarMenu');
+        menu.classList.toggle('open');
+      }
+
+      function toggleTheme() {
+        const isDarkMode = document.getElementById('themeToggle').checked;
+        if (isDarkMode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }
+
+      // Optional: Save the theme preference in localStorage
+      window.addEventListener('load', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const toggle = document.getElementById('themeToggle');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          toggle.checked = true;
+        }
+
+        toggle.addEventListener('change', () => {
+          const newTheme = toggle.checked ? 'dark' : 'light';
+          localStorage.setItem('theme', newTheme);
+        });
+      });
+    </script>
+  </body>
+</html>
