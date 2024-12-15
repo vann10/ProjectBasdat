@@ -1,11 +1,20 @@
 /* Global Styles */
+:root{
+    --first: #65B2B8;
+    --second: #172B46;
+    --third: #0A1930;
+    --text: #BDC7E0;
+    --shadow: #3a9198;
+    color-scheme: light dark;
+}
+
 html, body {
     height: 100%;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
     background-color: #f4f4f9;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
     line-height: 1.8;
+    overflow: auto;
 }
 
 body {
@@ -19,7 +28,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #1e3a8a;
-    color: white;
+    color: var(--text);
     padding: 1rem 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -56,7 +65,7 @@ body {
 }
 
 .nav-item a {
-    color: white;
+    color: var(--text);
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 500;
@@ -139,22 +148,39 @@ input:checked + .slider:before {
 
 /* Dark Mode */
 .dark-mode {
-    background-color: #121212;
-    color: #f4f4f9;
+    background-color: #0A1930;
+    color: var(--third);
+}
+
+.dark-mode html {
+    background-color: #0A1930;
 }
 
 .dark-mode .card {
-    background-color: #1e1e1e;
+    background-color: #0A1930;
+    outline-style: solid;
+    outline-color: #65B2B8;
     color: #f4f4f9;
 }
 
 .dark-mode .navbar {
-    background-color: #333;
+    background-color: var(--second);
 }
 
 .dark-mode .btn {
-    background-color: #3b82f6;
-    color: #f4f4f9;
+    background-color: #0A1930;
+    outline-style: solid;
+    outline-color: #65B2B8;
+    color: #BDC7E0;
+}
+
+.dark-mode .hero {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: linear-gradient(90deg, var(--shadow) 0%, var(--second) 55%, var(--third));
+    color: var(--text);
+    border-radius: 10px;
+    margin-bottom: 2rem;
 }
 
 /* Main Content */
@@ -171,8 +197,8 @@ main {
 .hero {
     text-align: center;
     padding: 4rem 1rem;
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-    color: white;
+    background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+    color: var(#f4f4f9);
     border-radius: 10px;
     margin-bottom: 2rem;
 }
@@ -230,14 +256,22 @@ main {
 
 .card-title {
     font-size: 1.5rem;
-    color: #1e3a8a;
+    color: var(--second);
     margin-bottom: 0.5rem;
+}
+
+.dark-mode .card-title {
+    color: var(--text)
 }
 
 .card-text {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     color: #555;
+}
+
+.dark-mode .card-text {
+    color: var(--first)
 }
 
 .btn {
@@ -258,8 +292,8 @@ main {
 
 /* Footer */
 footer {
-    background-color: #1e3a8a;
-    color: white;
+    background-color: var(--second);
+    color: var(--text);
     text-align: center;
     padding: 1.5rem 0;
     width: 100%; /* Pastikan footer mengambil lebar penuh */
