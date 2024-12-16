@@ -57,25 +57,19 @@
               <div class="mb-3">
                 <label for="id_kelas" class="form-label">id kelas</label>
                 <input type="text" class="form-control" id="id_kelas" name="id_kelas_Kelas" required>
-              </div>
-              <div class="mb-3">
+
                 <label for="id_guru" class="form-label">id guru</label>
-                <input type="text" class="form-control" id="id_guru" name="id_guru_AbsensiGuru" required>
-              </div>
-              <div class="mb-3">
-                <label for="tanggal" class="form-label">tanggal</label>
-                <input type="date" class="form-control" id="tanggal" name="tanggal_AbsensiGuru" required>
-              </div>
-              <div class="mb-3">
-                <label for="status" class="form-label">status</label>
-                <input type="text" class="form-control" id="status" name="status_AbsensiGuru" required>
+                <input type="text" class="form-control" id="id_guru" name="id_guru_Kelas" required>
+
+                <label for="kelas" class="form-label">kelas</label>
+                <input type="text" class="form-control" id="kelas" name="kelas_Kelas" required>
               </div>
         
               <button type="submit" class="btn btn-primary">Add</button>
             </form>
     
             <br>
-            <a href="{{ url_for('routesAbsensiGuru.create_AbsensiGuru') }}" class="btn btn-secondary">Back to Table A List</a>
+            <a href="{{ url_for('routesKelas.create_Kelas') }}" class="btn btn-secondary">Back to Table A List</a>
         
     </main>
     

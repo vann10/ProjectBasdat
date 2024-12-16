@@ -59,12 +59,12 @@ def create_DataGuru():
     # Handle the form submission when the method is POST
     if request.method == 'POST':
         # properti input digunakan disini
-        dataGuru_id_guru = request.form['id_guru_DataGuru']
-        dataGuru_nuptk = request.form['nuptk_DataGuru']
-        dataGuru_nama_guru = request.form['nama_guru_DataGuru']
-        dataGuru_jenis_kelamin = request.form['jenis_kelamin_DataGuru']
-        dataGuru_tanggal_lahir = request.form['tanggal_lahir_DataGuru']
-        dataGuru_alamat = request.form['alamat_DataGuru']
+        dataGuru_id_guru        = request.form['id_guru_DataGuru']
+        dataGuru_nuptk          = request.form['nuptk_DataGuru']
+        dataGuru_nama_guru      = request.form['nama_guru_DataGuru']
+        dataGuru_jenis_kelamin  = request.form['jenis_kelamin_DataGuru']
+        dataGuru_tanggal_lahir  = request.form['tanggal_lahir_DataGuru']
+        dataGuru_alamat         = request.form['alamat_DataGuru']
         
         # Get a connection to the database
         conn = create_connection()

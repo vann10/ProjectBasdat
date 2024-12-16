@@ -52,3 +52,38 @@ def tableKelas():
         return render_template('tableKelas.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tableKelas.html', table=None)
+
+@routesKelas.route('/Create/createKelas', methods=['GET', 'POST'])
+def create_Kelas():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        kelas_id_kelas  = request.form['id_kelas_Kelas']
+        kelas_id_guru   = request.form['id_guru_Kelas']
+        kelas_kelas     = request.form['kelas_Kelas']
+
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO Kelas (id_kelas, id_guru, kelas) VALUES (?, ?, ?)', 
+                                (kelas_id_kelas, kelas_id_guru, kelas_kelas))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('Table Kelas added successfully!', 'success')
+                return redirect(url_for('routesKelas.tableKelas'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createKelas.html')
