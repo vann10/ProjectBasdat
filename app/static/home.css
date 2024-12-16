@@ -29,7 +29,7 @@ body {
     align-items: center;
     background-color: #1e3a8a;
     color: var(--text);
-    padding: 1rem 2rem;
+    padding: 1rem 5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -37,20 +37,22 @@ body {
 }
 
 .navbar-brand {
+    scale: 1.2;
     transition: 0.5s;
 }
 
 .navbar-brand:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     transition: transform 0.5s;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
+    margin-left: 30px;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    padding: 0.5rem 2rem;
+    border-radius: 3rem;
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -89,7 +91,7 @@ body {
 
 .navbar-menu {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 /* Switch Styles */

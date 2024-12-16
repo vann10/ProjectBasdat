@@ -1,4 +1,13 @@
 /* Global Styles */
+:root{
+    --first: #65B2B8;
+    --second: #172B46;
+    --third: #0A1930;
+    --text: #BDC7E0;
+    --shadow: #3a9198;
+    color-scheme: light dark;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -23,7 +32,7 @@ a {
     justify-content: space-between;
     align-items: center;
     background-color: #1e3a8a;
-    color: white;
+    color: var(--text);
     padding: 1rem 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -60,7 +69,7 @@ a {
 }
 
 .nav-link {
-    color: white;
+    color: var(--text);
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 500;
