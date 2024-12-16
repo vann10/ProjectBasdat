@@ -52,3 +52,40 @@ def tableAbsensiSiswa():
         return render_template('tableAbsensiSiswa.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tableAbsensiSiswa.html', table=None)
+
+# Create Data
+@routesAbsensiSiswa.route('/Create/createAbsSiswa', methods=['GET', 'POST'])
+def create_AbsensiSiswa():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        absensiSiswa_id_absensisiswa = request.form['id_absensisiswa_AbsensiSiswa']
+        absensiSiswa_id_siswa = request.form['id_siswa_AbsensiSiswa']
+        absensiSiswa_tanggal = request.form['tanggal_AbsensiSiswa']
+        absensiSiswa_status = request.form['status_AbsensiSiswa']
+
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO AbsensiSiswa (id_absensisiswa, id_siswa, tanggal, status) VALUES (?, ?, ?, ?)', 
+                               (absensiSiswa_id_absensisiswa, absensiSiswa_id_siswa, absensiSiswa_tanggal, absensiSiswa_status))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('TableA added successfully!', 'success')
+                return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createAbsSiswa.html')

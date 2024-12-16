@@ -55,15 +55,34 @@
     
             <form method="POST">
               <div class="mb-3">
-                <label for="name" class="form-label">Table A Name</label>
-                <input type="text" class="form-control" id="name" name="nameTableA" required>
+                <label for="id_siswa" class="form-label">id siswa</label>
+                <input type="text" class="form-control" id="id_siswa" name="id_siswa_DataSiswa" required>
+
+                <label for="nisn" class="form-label">nisn</label>
+                <input type="text" class="form-control" id="nisn" name="nisn_DataSiswa" required>
+
+                <label for="nama_siswa" class="form-label">nama siswa</label>
+                <input type="text" class="form-control" id="nama_siswa" name="nama_siswa_DataSiswa" required>
+
+                <label for="jenis_kelamin" class="form-label">jenis kelamin</label>
+                <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin_DataSiswa" required>
+                
+                <label for="tanggal_lahir" class="form-label">tanggal lahir</label>
+                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir_DataSiswa" required>
+                
+                <label for="alamat" class="form-label">alamat</label>
+                <input type="text" class="form-control" id="alamat" name="alamat_DataSiswa" required>
+
+                <label for="id_kelas" class="form-label">id kelas</label>
+                <input type="text" class="form-control" id="id_kelas" name="id_kelas_DataSiswa" required>
               </div>
+              
         
               <button type="submit" class="btn btn-primary">Add</button>
             </form>
     
             <br>
-            <a href="{{ url_for('routes.tableA') }}" class="btn btn-secondary">Back to Table A List</a>
+            <a href="{{ url_for('routesDataSiswa.create_DataSiswa') }}" class="btn btn-secondary">Back to Table A List</a>
         
     </main>
     

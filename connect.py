@@ -17,4 +17,5 @@ def create_connection():
     except pyodbc.Error as e:
         # print the error if there is one
         print(f'Error: {e}')
+        e = "error wlee"
         return None

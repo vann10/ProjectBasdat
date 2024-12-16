@@ -52,3 +52,43 @@ def tableDataSiswa():
         return render_template('tableDataSiswa.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tableDataSiswa.html', table=None)
+
+# Create Data
+@routesDataSiswa.route('/Create/createDataSiswa', methods=['GET', 'POST'])
+def create_DataSiswa():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        dataSiswa_id_siswa = request.form['id_siswa_DataSiswa']
+        dataSiswa_nisn = request.form['nisn_DataSiswa']
+        dataSiswa_nama_siswa = request.form['nama_siswa_DataSiswa']
+        dataSiswa_jenis_kelamin = request.form['jenis_kelamin_DataSiswa']
+        dataSiswa_tanggal_lahir = request.form['tanggal_lahir_DataSiswa']
+        dataSiswa_alamat = request.form['alamat_DataSiswa']
+        dataSiswa_id_kelas = request.form['id_kelas_DataSiswa']
+        
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO DataSiswa (id_siswa, nisn, nama_siswa, jenis_kelamin, tanggal_lahir, alamat, id_kelas) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+                               (dataSiswa_id_siswa, dataSiswa_nisn, dataSiswa_nama_siswa, dataSiswa_jenis_kelamin, dataSiswa_tanggal_lahir, dataSiswa_alamat, dataSiswa_id_kelas))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('TableA added successfully!', 'success')
+                return redirect(url_for('routesDataSiswa.tableDataSiswa'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createDataSiswa.html')

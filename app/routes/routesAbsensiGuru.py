@@ -8,6 +8,7 @@ routesAbsensiGuru = Blueprint('routesAbsensiGuru', __name__)
 def index():
     return render_template('home.html')
 
+# Show All Data
 @routesAbsensiGuru.route('/tableAbsensiGuru')
 def tableAbsensiGuru():
     # Get the current page number from the query string (default to page 1)
@@ -53,12 +54,16 @@ def tableAbsensiGuru():
     else:
         return render_template('tableAbsensiGuru.html', table=None)
 
-@routesAbsensiGuru.route('/tableA/create', methods=['GET', 'POST'])
-def create_tableA():
+# Create Data
+@routesAbsensiGuru.route('/Create/createAbsGuru', methods=['GET', 'POST'])
+def create_AbsensiGuru():
     # Handle the form submission when the method is POST
     if request.method == 'POST':
         # properti input digunakan disini
-        tableA_name = request.form['nameTableA']
+        absensiGuru_id_absensiguru = request.form['id_absensiguru_AbsensiGuru']
+        absensiGuru_id_guru = request.form['id_guru_AbsensiGuru']
+        absensiGuru_tanggal = request.form['tanggal_AbsensiGuru']
+        absensiGuru_status = request.form['status_AbsensiGuru']
         
         # Get a connection to the database
         conn = create_connection()
@@ -68,12 +73,13 @@ def create_tableA():
             cursor = conn.cursor()
             try:
                 # Insert the new tableA into the database
-                cursor.execute('INSERT INTO TableA (Name) VALUES (?)', (tableA_name))
+                cursor.execute('INSERT INTO AbsensiGuru (id_absensiguru, id_guru, tanggal, status) VALUES (?, ?, ?, ?)', 
+                               (absensiGuru_id_absensiguru, absensiGuru_id_guru, absensiGuru_tanggal, absensiGuru_status))
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('TableA added successfully!', 'success')
-                return redirect(url_for('routes.tableA'))
+                flash('AbsensiGuru added successfully!', 'success')
+                return redirect(url_for('routesAbsensiGuru.tableAbsensiGuru'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message
             finally:
@@ -83,7 +89,7 @@ def create_tableA():
         flash('Failed to connect to the database', 'danger')  # Error if connection failed
 
     # Render the form for GET request
-    return render_template('createTableA.html')
+    return render_template('Create/createAbsGuru.html')
 
 
 @routesAbsensiGuru.route('/tableA/update/<id>', methods=['GET', 'POST'])

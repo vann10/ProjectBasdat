@@ -29,7 +29,7 @@
         <h1 class="text-center text-primary mb-4">All List of Table Absensi Guru</h1>
         <p class="text-center mb-5">Tabel lengkap dari absensi guru</p>
         
-        <a href="/tableAbsensiGuru/create">
+        <a href="/Create/createAbsGuru">
           <button class="create-btn">CREATE</button>
         </a>
         
@@ -109,6 +109,30 @@
         const menu = document.getElementById('navbarMenu');
         menu.classList.toggle('open');
       }
+  
+      function toggleTheme() {
+        const isDarkMode = document.getElementById('themeToggle').checked;
+        if (isDarkMode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }
+  
+      // Optional: Save the theme preference in localStorage
+      window.addEventListener('load', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const toggle = document.getElementById('themeToggle');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          toggle.checked = true;
+        }
+  
+        toggle.addEventListener('change', () => {
+          const newTheme = toggle.checked ? 'dark' : 'light';
+          localStorage.setItem('theme', newTheme);
+        });
+      });
     </script>
   </body>
 </html>
