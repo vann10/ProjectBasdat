@@ -52,3 +52,40 @@ def tableNilai():
         return render_template('tableNilai.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tableNilai.html', table=None)
+    
+@routesNilai.route('/Create/createNilai', methods=['GET', 'POST'])
+def create_Nilai():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        Nilai_id_nilai       = request.form['id_nilai_Nilai']
+        Nilai_id_mapel       = request.form['id_mapel_Nilai']
+        Nilai_id_siswa       = request.form['id_siswa_Nilai']
+        Nilai_nilai_akhir    = request.form['nilai_akhir_Nilai']
+        
+
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO Kelas (id_nilai, id_mapel, id_siswa, nilai_akhir) VALUES (?, ?, ?, ?)', 
+                                (Nilai_id_nilai, Nilai_id_mapel, Nilai_id_siswa, Nilai_nilai_akhir))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('Table Nilai added successfully!', 'success')
+                return redirect(url_for('routesNilai.tableNilai'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createNilai.html')
