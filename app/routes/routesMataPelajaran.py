@@ -2,13 +2,13 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from connect import create_connection
 
 # Create a blueprint for modular routing
-routesMapel = Blueprint('routesMapel', __name__)
+routesMataPelajaran = Blueprint('routesMataPelajaran', __name__)
 
-@routesMapel.route('/')
+@routesMataPelajaran.route('/')
 def index():
     return render_template('home.html')
-    
-@routesMapel.route('/tableMataPelajaran')
+    d
+@routesMataPelajaran.route('/tableMataPelajaran')
 def tableMataPelajaran():
     # Get the current page number from the query string (default to page 1)
     page = request.args.get('page', 1, type=int)
@@ -53,7 +53,7 @@ def tableMataPelajaran():
     else:
         return render_template('tableMataPelajaran.html', table=None)
 
-@routesMapel.route('/Create/createMataPelajaran', methods=['GET', 'POST'])
+@routesMataPelajaran.route('/Create/createMataPelajaran', methods=['GET', 'POST'])
 def create_MataPelajaran():
     # Handle the form submission when the method is POST
     if request.method == 'POST':
@@ -78,7 +78,7 @@ def create_MataPelajaran():
                 
                 # Redirect to the tableA list with a success message
                 flash('Table Mata Pelajaran added successfully!', 'success')
-                return redirect(url_for('routesKelas.tableKelas'))
+                return redirect(url_for('routesMataPelajaran.tableMataPelajaran'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message
             finally:

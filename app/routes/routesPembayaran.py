@@ -89,4 +89,4 @@ def create_Pembayaran():
         flash('Failed to connect to the database', 'danger')  # Error if connection failed
 
     # Render the form for GET request
-    return render_template('Create/createKelas.html')
+    return render_template('Create/createPembayaran.html')
