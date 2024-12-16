@@ -52,3 +52,40 @@ def tableMataPelajaran():
         return render_template('tableMataPelajaran.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tableMataPelajaran.html', table=None)
+
+@routesMapel.route('/Create/createMataPelajaran', methods=['GET', 'POST'])
+def create_MataPelajaran():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        mataPelajaran_id_mapel         = request.form['id_mapel_MataPelajaran']
+        mataPelajaran_mata_pelajaran   = request.form['mata_pelajaran_MataPelajaran']
+        mataPelajaran_kelas            = request.form['kelas_MataPelajaran']
+        mataPelajaran_id_guru          = request.form['id_guru_MataPelajaran']
+
+
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO Kelas (id_mapel, mata_pelajaran, kelas, id_guru) VALUES (?, ?, ?, ?)', 
+                                (mataPelajaran_id_mapel, mataPelajaran_mata_pelajaran, mataPelajaran_kelas, mataPelajaran_id_guru))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('Table Mata Pelajaran added successfully!', 'success')
+                return redirect(url_for('routesKelas.tableKelas'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createMataPelajaran.html')
