@@ -52,3 +52,41 @@ def tablePembayaran():
         return render_template('tablePembayaran.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tablePembayaran.html', table=None)
+    
+@routesPembayaran.route('/Create/createPembayaran', methods=['GET', 'POST'])
+def create_Pembayaran():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        pembayaran_id_pembayaran        = request.form['id_pembayaran_Pembayaran']
+        pembayaran_id_siswa             = request.form['id_siswa_Pembayaran']
+        pembayaran_total_tagihan        = request.form['total_tagihan_Pembayaran']
+        pembayaran_status               = request.form['status_Pembayaran']
+        pembayaran_tanggal_transaksi    = request.form['tanggal_transaksi_Pembayaran']
+        
+
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO Kelas (id_pembayaran, id_siswa, total_tagihan, status, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)', 
+                                (pembayaran_id_pembayaran, pembayaran_id_siswa, pembayaran_total_tagihan, pembayaran_status, pembayaran_tanggal_transaksi))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('Table Pembayaran added successfully!', 'success')
+                return redirect(url_for('routesPembayaran.tablePembayaran'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createKelas.html')
