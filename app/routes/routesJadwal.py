@@ -52,3 +52,44 @@ def tableJadwal():
         return render_template('tableJadwal.html', table=table, total_pages=total_pages, current_page=page)
     else:
         return render_template('tableJadwal.html', table=None)
+
+# Create Data
+@routesJadwal.route('/Create/createJadwal', methods=['GET', 'POST'])
+def create_Jadwal():
+    # Handle the form submission when the method is POST
+    if request.method == 'POST':
+        # properti input digunakan disini
+        jadwal_id_jadwal  = request.form['id_jadwal_Jadwal']
+        jadwal_id_kelas  = request.form['id_kelas_Jadwal']
+        jadwal_id_mapel  = request.form['id_mapel_Jadwal']
+        jadwal_id_guru  = request.form['id_guru_Jadwal']
+        jadwal_hari  = request.form['hari_Jadwal']
+        jadwal_jam_mulai  = request.form['jam_mulai_Jadwal']
+        jadwal_jam_selesai  = request.form['jam_selesai_Jadwal']
+
+
+        # Get a connection to the database
+        conn = create_connection()
+        
+        # Check if the connection was successful
+        if conn:
+            cursor = conn.cursor()
+            try:
+                # Insert the new tableA into the database
+                cursor.execute('INSERT INTO Jadwal (id_jadwal, id_kelas, id_mapel,  id_guru, hari, jam_mulai, jam_selesai) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+                                (jadwal_id_jadwal, jadwal_id_kelas, jadwal_id_mapel, jadwal_id_guru, jadwal_hari, jadwal_jam_mulai, jadwal_jam_selesai))
+                conn.commit()  # Commit the transaction
+                
+                # Redirect to the tableA list with a success message
+                flash('Table Kelas added successfully!', 'success')
+                return redirect(url_for('routesJadwal.tableJadwal'))
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'danger')  # Flash error message
+            finally:
+                cursor.close()
+                conn.close()
+        
+        flash('Failed to connect to the database', 'danger')  # Error if connection failed
+
+    # Render the form for GET request
+    return render_template('Create/createJadwal.html')
