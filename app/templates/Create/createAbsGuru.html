@@ -67,8 +67,12 @@
                 <input type="date" class="form-control" id="tanggal" name="tanggal_AbsensiGuru" required>
               </div>
               <div class="mb-3">
-                <label for="status" class="form-label">Statys</label>
-                <input type="text" class="form-control" id="status" name="status_AbsensiGuru" required>
+                <label for="status" class="form-label">Status</label>
+                <select class="form-control" id="status" name="status_AbsensiGuru" required>
+                  <option value="Hadir"> Hadir</option>
+                  <option value="Izin"> Izin</option>
+                  <option value="Alpha"> Alpha</option>
+                </select>
               </div>
         
               <button type="submit" class="btn btn-primary">Add</button>
