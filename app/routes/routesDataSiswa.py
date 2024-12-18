@@ -92,3 +92,29 @@ def create_DataSiswa():
 
     # Render the form for GET request
     return render_template('Create/createDataSiswa.html')
+
+# Delete Data
+@routesDataSiswa.route('/tableDataSiswa/delete/<id_siswa>', methods=['POST'])
+def delete_continent(id_siswa):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM DataSiswa WHERE id_siswa = ?', (id_siswa,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_siswa} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesDataSiswa.tableDataSiswa'))

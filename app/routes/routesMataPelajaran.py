@@ -72,7 +72,7 @@ def create_MataPelajaran():
             cursor = conn.cursor()
             try:
                 # Insert the new tableA into the database
-                cursor.execute('INSERT INTO Kelas (id_mapel, mata_pelajaran, kelas, id_guru) VALUES (?, ?, ?, ?)', 
+                cursor.execute('INSERT INTO MataPelajaran (id_mapel, mata_pelajaran, kelas, id_guru) VALUES (?, ?, ?, ?)', 
                                 (mataPelajaran_id_mapel, mataPelajaran_mata_pelajaran, mataPelajaran_kelas, mataPelajaran_id_guru))
                 conn.commit()  # Commit the transaction
                 
@@ -89,3 +89,29 @@ def create_MataPelajaran():
 
     # Render the form for GET request
     return render_template('Create/createMataPelajaran.html')
+
+# Delete Data
+@routesMataPelajaran.route('/tableMataPelajaran/delete/<id_mapel>', methods=['POST'])
+def delete_continent(id_mapel):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM MataPelajaran WHERE id_mapel = ?', (id_mapel,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_mapel} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesMataPelajaran.tableMataPelajaran'))

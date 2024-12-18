@@ -63,7 +63,8 @@ def create_Pembayaran():
         pembayaran_total_tagihan        = request.form['total_tagihan_Pembayaran']
         pembayaran_status               = request.form['status_Pembayaran']
         pembayaran_tanggal_transaksi    = request.form['tanggal_transaksi_Pembayaran']
-        
+        if not pembayaran_tanggal_transaksi:  # Jika kosong, set None
+            pembayaran_tanggal_transaksi = None
 
         # Get a connection to the database
         conn = create_connection()
@@ -73,7 +74,7 @@ def create_Pembayaran():
             cursor = conn.cursor()
             try:
                 # Insert the new tableA into the database
-                cursor.execute('INSERT INTO Kelas (id_pembayaran, id_siswa, total_tagihan, status, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)', 
+                cursor.execute('INSERT INTO Pembayaran (id_pembayaran, id_siswa, total_tagihan, status, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)', 
                                 (pembayaran_id_pembayaran, pembayaran_id_siswa, pembayaran_total_tagihan, pembayaran_status, pembayaran_tanggal_transaksi))
                 conn.commit()  # Commit the transaction
                 
@@ -90,3 +91,29 @@ def create_Pembayaran():
 
     # Render the form for GET request
     return render_template('Create/createPembayaran.html')
+
+# Delete Data
+@routesPembayaran.route('/tablePembayaran/delete/<id_pembayaran>', methods=['POST'])
+def delete_continent(id_pembayaran):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM Pembayaran WHERE id_pembayaran = ?', (id_pembayaran,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_pembayaran} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesPembayaran.tablePembayaran'))

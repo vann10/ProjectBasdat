@@ -90,3 +90,29 @@ def create_Evaluasi():
 
     # Render the form for GET request
     return render_template('Create/createEvaluasi.html')
+
+# Delete Data
+@routesEvaluasi.route('/tableEvaluasi/delete/<id_evaluasi>', methods=['POST'])
+def delete_continent(id_evaluasi):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM Evaluasi WHERE id_evaluasi = ?', (id_evaluasi,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_evaluasi} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesEvaluasi.tableEvaluasi'))

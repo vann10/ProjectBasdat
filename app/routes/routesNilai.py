@@ -53,6 +53,7 @@ def tableNilai():
     else:
         return render_template('tableNilai.html', table=None)
     
+#Create Data
 @routesNilai.route('/Create/createNilai', methods=['GET', 'POST'])
 def create_Nilai():
     # Handle the form submission when the method is POST
@@ -72,7 +73,7 @@ def create_Nilai():
             cursor = conn.cursor()
             try:
                 # Insert the new tableA into the database
-                cursor.execute('INSERT INTO Kelas (id_nilai, id_mapel, id_siswa, nilai_akhir) VALUES (?, ?, ?, ?)', 
+                cursor.execute('INSERT INTO Nilai (id_nilai, id_mapel, id_siswa, nilai_akhir) VALUES (?, ?, ?, ?)', 
                                 (Nilai_id_nilai, Nilai_id_mapel, Nilai_id_siswa, Nilai_nilai_akhir))
                 conn.commit()  # Commit the transaction
                 
@@ -89,3 +90,29 @@ def create_Nilai():
 
     # Render the form for GET request
     return render_template('Create/createNilai.html')
+
+# Delete Data
+@routesNilai.route('/tableNilai/delete/<id_nilai>', methods=['POST'])
+def delete_continent(id_nilai):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM Nilai WHERE id_nilai = ?', (id_nilai,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_nilai} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesNilai.tableNilai'))

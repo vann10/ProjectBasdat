@@ -336,3 +336,52 @@ footer {
         transform: translateY(-20px);
     }
 }
+/* Style for popup background */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Fullscreen width */
+    height: 100%; /* Fullscreen height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  
+  /* Style for popup content (centered in the middle of the screen) */
+  .popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Adjust to center the content */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+  }
+  
+  /* Style for buttons */
+  .delete-btn,
+  .confirm-delete,
+  .cancel-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .confirm-delete {
+    background-color: red;
+    color: white;
+  }
+  
+  .cancel-btn {
+    background-color: gray;
+    color: white;
+  }
+  
+  

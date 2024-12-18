@@ -93,3 +93,29 @@ def create_Jadwal():
 
     # Render the form for GET request
     return render_template('Create/createJadwal.html')
+
+# Delete Data
+@routesJadwal.route('/tableJadwal/delete/<id_jadwal>', methods=['POST'])
+def delete_continent(id_jadwal):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM Jadwal WHERE id_jadwal = ?', (id_jadwal,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_jadwal} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesJadwal.tableJadwal'))

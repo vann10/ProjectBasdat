@@ -87,3 +87,29 @@ def create_Kelas():
 
     # Render the form for GET request
     return render_template('Create/createKelas.html')
+
+# Delete Data
+@routesKelas.route('/tableKelas/delete/<id_kelas>', methods=['POST'])
+def delete_continent(id_kelas):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM Kelas WHERE id_kelas = ?', (id_kelas,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_kelas} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesKelas.tableKelas'))
