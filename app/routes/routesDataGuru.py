@@ -79,7 +79,7 @@ def create_DataGuru():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('TableA added successfully!', 'success')
+                flash(f'{dataGuru_id_guru} added successfully!', 'success')
                 return redirect(url_for('routesDataGuru.tableDataGuru'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message
@@ -92,3 +92,29 @@ def create_DataGuru():
     # Render the form for GET request
     return render_template('Create/createDataGuru.html')
 
+
+# Delete Data
+@routesDataGuru.route('/tableDataGuru/delete/<id_guru>', methods=['POST'])
+def delete_continent(id_guru):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM DataGuru WHERE id_guru = ?', (id_guru,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_guru} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesDataGuru.tableDataGuru'))
