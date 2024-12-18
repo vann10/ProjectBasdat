@@ -4,7 +4,7 @@
     --second: #172B46;
     --third: #0A1930;
     --text: #BDC7E0;
-    --shadow: #3a9198;
+    --shadow: #34868c;
     color-scheme: light dark;
 }
 
@@ -289,7 +289,7 @@ main {
 }
 
 .btn:hover {
-    background-color: #3b82f6;
+    background-color: var(--shadow);
 }
 
 /* Footer */

@@ -77,7 +77,7 @@ def create_AbsensiSiswa():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('TableA added successfully!', 'success')
+                flash(f'{absensiSiswa_id_absensisiswa} added successfully!', 'success')
                 return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message
@@ -89,3 +89,29 @@ def create_AbsensiSiswa():
 
     # Render the form for GET request
     return render_template('Create/createAbsSiswa.html')
+
+# Delete Data
+@routesAbsensiSiswa.route('/tableAbsensiSiswa/delete/<id_absensisiswa>', methods=['POST'])
+def delete_continent(id_absensisiswa):
+    # Get a connection to the database
+    conn = create_connection()
+    
+    # Check if the connection was successful
+    if conn:
+        cursor = conn.cursor()
+        try:
+            # Delete the tableA from the database
+            cursor.execute('DELETE FROM AbsensiSiswa WHERE id_absensisiswa = ?', (id_absensisiswa,))
+            conn.commit()  # Commit the transaction
+            
+            # Redirect to the tableA list with a success message
+            flash(f'{id_absensisiswa} deleted successfully!', 'success')
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+        finally:
+            cursor.close()
+            conn.close()  # Ensure the connection is closed
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+    
+    return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))

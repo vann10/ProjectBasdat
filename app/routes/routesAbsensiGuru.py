@@ -78,7 +78,7 @@ def create_AbsensiGuru():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('AbsensiGuru added successfully!', 'success')
+                flash(f'{absensiGuru_id_absensiguru} added successfully!', 'success')
                 return redirect(url_for('routesAbsensiGuru.tableAbsensiGuru'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message
@@ -91,7 +91,7 @@ def create_AbsensiGuru():
     # Render the form for GET request
     return render_template('Create/createAbsGuru.html')
 
-
+#Update Data
 @routesAbsensiGuru.route('/tableA/update/<id>', methods=['GET', 'POST'])
 def update_tableA(id):
     conn = create_connection()
@@ -127,8 +127,9 @@ def update_tableA(id):
         flash('Error: Unable to connect to the database.', 'danger')
         return redirect(url_for('routes.continents'))
 
-@routesAbsensiGuru.route('/tableA/delete/<id>', methods=['POST'])
-def delete_continent(id):
+# Delete Data
+@routesAbsensiGuru.route('/tableAbsensiGuru/delete/<id_absensiguru>', methods=['POST'])
+def delete_continent(id_absensiguru):
     # Get a connection to the database
     conn = create_connection()
     
@@ -137,11 +138,11 @@ def delete_continent(id):
         cursor = conn.cursor()
         try:
             # Delete the tableA from the database
-            cursor.execute('DELETE FROM TableA WHERE id = ?', (id))
+            cursor.execute('DELETE FROM AbsensiGuru WHERE id_absensiguru = ?', (id_absensiguru,))
             conn.commit()  # Commit the transaction
             
             # Redirect to the tableA list with a success message
-            flash('Table A deleted successfully!', 'success')
+            flash(f'{id_absensiguru} deleted successfully!', 'success')
         except Exception as e:
             flash(f'Error: {str(e)}', 'danger')
         finally:
@@ -150,4 +151,4 @@ def delete_continent(id):
     else:
         flash('Error: Unable to connect to the database.', 'danger')
     
-    return redirect(url_for('routes.tableA'))
+    return redirect(url_for('routesAbsensiGuru.tableAbsensiGuru'))
