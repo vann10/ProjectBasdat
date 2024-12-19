@@ -115,3 +115,48 @@ def delete_continent(id_absensisiswa):
         flash('Error: Unable to connect to the database.', 'danger')
     
     return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))
+
+#Update Data
+@routesAbsensiSiswa.route('/tableAbsensiSiswa/update/<id_absensisiswa>', methods=['GET', 'POST'])
+def update_AbsensiSiswa(id_absensisiswa):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+                new_id_siswa = request.form['id_siswa_AbsensiSiswa']
+                new_tanggal = request.form['tanggal_AbsensiSiswa']
+                new_status = request.form['status_AbsensiSiswa']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE AbsensiSiswa 
+                               SET  id_siswa = ?, tanggal = ?, status = ?
+                                WHERE id_absensisiswa = ?''', (new_id_siswa, new_tanggal, new_status, id_absensisiswa))
+                conn.commit()
+
+                flash(f'{id_absensisiswa} updated successfully!', 'success')
+                return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT id_siswa, tanggal, status FROM AbsensiSiswa WHERE id_absensisiswa = ?', (id_absensisiswa,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateAbsSiswa.html', AbsensiSiswa={
+                'id_siswa': table[0],
+                'tanggal': table[1],
+                'status': table[2]
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesAbsensiSiswa.tableAbsensiSiswa'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesAbsensiSiswa.continents'))

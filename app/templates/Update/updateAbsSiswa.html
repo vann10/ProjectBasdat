@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Insert to Evaluasi</title>
+    <title> UPDATE KamarHotel</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
@@ -13,7 +13,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/">Insert to Evaluasi</a>
+          <a class="navbar-brand" href="/">EXAMPLE</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -23,7 +23,7 @@
                 <a class="nav-link" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/tableA">table</a>
+                <a class="nav-link" href="/KamarHotel">table</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/continent">Continent</a>
@@ -37,7 +37,7 @@
     <main>
       <div class="container mt-5">
         <div class="container mt-5">
-            <h1 class="text-center text-primary mb-4">Insert Data for Table Evaluasi</h1>
+            <h1 class="text-center text-primary mb-4">Update for Table Absensi Guru</h1>
         
             <!-- Display messages -->
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -54,38 +54,32 @@
             {% endwith %}
     
             <form method="POST">
-              <div class="mb-3">
-                <label for="id_evaluasi" class="form-label">Id Evaluasi</label>
-                <input type="text" class="form-control" id="id_evaluasi" name="id_evaluasi_Evaluasi" required>
-
-                <label for="id_siswa" class="form-label">Id Siswa</label>
-                <input type="text" class="form-control" id="id_siswa" name="id_siswa_Evaluasi" required>
-
-                <!-- <label for="status" class="form-label">Status</label>
-                <select class="form-control" id="status" name="status_Evaluasi" required>
-                  <option value="Sangat Baik">Sangat Baik</option>
-                  <option value="Baik">Baik</option>
-                  <option value="Cukup">Cukup</option>
-                  <option value="Kurang">Kurang</option>
-                </select> -->
-                <label for="rerata_kehadiran" class="form-label">Rerata Kehadiran</label>
-                <input type="number" class="form-control" id="rerata_kehadiran" name="rerata_kehadiran_Evaluasi" required>
+                <div class="mb-3">
+                  <label for="id_siswa" class="form-label">Id Siswa</label>
+                  <input type="text" class="form-control" id="id_siswa" name="id_siswa_AbsensiSiswa" value="{{AbsensiSiswa.id_siswa}}" readonly>
                 
-                <label for="rerata_nilai" class="form-label">Rerata Nilai</label>
-                <input type="number" class="form-control" id="rerata_nilai" name="rerata_nilai_Evaluasi" required>
-              </div>
-              
+                  <label for="tanggal" class="form-label">Tanggal</label>
+                  <input type="date" class="form-control" id="tanggal" name="tanggal_AbsensiSiswa" value="{{AbsensiSiswa.tanggal}}" required>
+                
+                  <label for="status" class="form-label">Status</label>
+                  <select class="form-control" id="status" name="status_AbsensiSiswa" value="{{AbsensiSiswa.status}}" required>
+                    <option value="Hadir"> Hadir</option>
+                    <option value="Izin"> Izin</option>
+                    <option value="Alpha"> Alpha</option>
+                  </select>
+                
+                </div>
         
-              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="submit" class="btn btn-primary">Update</button>
             </form>
     
             <br>
-            <a href="{{ url_for('routesEvaluasi.tableEvaluasi') }}" class="btn btn-secondary">Back to Table Evaluasi</a>
+            <a href="{{ url_for('routesAbsensiSiswa.tableAbsensiSiswa') }}" class="btn btn-secondary">Back to Table Absensi Guru List</a>
         
     </main>
     
     <footer class="bg-primary text-light text-center p-3 mt-5 shadow-sm">
-      <p>&copy; 2024 SMAN 1 SURAKARTA DB</p>
+      <p>&copy; 2024 Example</p>
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

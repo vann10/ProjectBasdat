@@ -61,7 +61,6 @@ def create_Evaluasi():
         # properti input digunakan disini
         evaluasi_id_evaluasi = request.form['id_evaluasi_Evaluasi']
         evaluasi_id_siswa = request.form['id_siswa_Evaluasi']
-        evaluasi_status = request.form['status_Evaluasi']
         evaluasi_rerata_kehadiran = request.form['rerata_kehadiran_Evaluasi']
         evaluasi_rerata_nilai = request.form['rerata_nilai_Evaluasi']
 
@@ -73,8 +72,32 @@ def create_Evaluasi():
             cursor = conn.cursor()
             try:
                 # Insert the new tableA into the database
-                cursor.execute('INSERT INTO Evaluasi (id_evaluasi, id_siswa, status, rerata_kehadiran, rerata_nilai) VALUES (?, ?, ?, ?, ?)', 
-                               (evaluasi_id_evaluasi,evaluasi_id_siswa, evaluasi_status, evaluasi_rerata_kehadiran, evaluasi_rerata_nilai))
+                cursor.execute('''
+                    INSERT INTO Evaluasi (id_evaluasi, id_siswa, status, rerata_kehadiran, rerata_nilai) 
+                    VALUES (
+                        ?, 
+                        ?,
+                        CASE 
+                            WHEN ? >= 90 AND ? >= 85 THEN 'Sangat Baik'
+                            WHEN ? >= 80 AND ? >= 75 AND (? < 90 OR ? < 85) THEN 'Baik'
+                            WHEN ? >= 70 AND ? >= 60 AND (? < 80 OR ? < 75) THEN 'Cukup'
+                            WHEN ? < 70 OR ? < 60 THEN 'Kurang'
+                            ELSE 'Tidak Valid'
+                        END,
+                        ?,
+                        ?
+                    )
+                ''', (
+                    evaluasi_id_evaluasi,
+                    evaluasi_id_siswa,
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai,  # untuk kondisi Sangat Baik
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai,  # untuk kondisi Baik (pertama)
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai,  # untuk kondisi Baik (kedua)
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai,  # untuk kondisi Cukup (pertama)
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai,  # untuk kondisi Cukup (kedua)
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai,  # untuk kondisi Kurang
+                    evaluasi_rerata_kehadiran, evaluasi_rerata_nilai   # untuk nilai yang akan disimpan
+                ))
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
