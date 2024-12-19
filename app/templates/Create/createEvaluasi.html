@@ -62,8 +62,12 @@
                 <input type="text" class="form-control" id="id_siswa" name="id_siswa_Evaluasi" required>
 
                 <label for="status" class="form-label">Status</label>
-                <input type="text" class="form-control" id="status" name="status_Evaluasi" required>
-
+                <select class="form-control" id="status" name="status_Evaluasi" required>
+                  <option value="Sangat Baik">Sangat Baik</option>
+                  <option value="Baik">Baik</option>
+                  <option value="Cukup">Cukup</option>
+                  <option value="Kurang">Kurang</option>
+                </select>
                 <label for="rerata_kehadiran" class="form-label">Rerata Kehadiran</label>
                 <input type="number" class="form-control" id="rerata_kehadiran" name="rerata_kehadiran_Evaluasi" required>
                 
@@ -76,12 +80,12 @@
             </form>
     
             <br>
-            <a href="{{ url_for('routesEvaluasi.create_Evaluasi') }}" class="btn btn-secondary">Back to Table A List</a>
+            <a href="{{ url_for('routesEvaluasi.tableEvaluasi') }}" class="btn btn-secondary">Back to Table Evaluasi</a>
         
     </main>
     
     <footer class="bg-primary text-light text-center p-3 mt-5 shadow-sm">
-      <p>&copy; 2024 Example</p>
+      <p>&copy; 2024 SMAN 1 SURAKARTA DB</p>
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
