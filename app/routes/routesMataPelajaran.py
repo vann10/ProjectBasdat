@@ -63,7 +63,6 @@ def create_MataPelajaran():
         mataPelajaran_kelas            = request.form['kelas_MataPelajaran']
         mataPelajaran_id_guru          = request.form['id_guru_MataPelajaran']
 
-
         # Get a connection to the database
         conn = create_connection()
         

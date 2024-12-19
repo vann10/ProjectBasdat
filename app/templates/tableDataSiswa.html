@@ -37,7 +37,7 @@
             {% endif %}
           {% endwith %}
       </div> 
-        <h1 class="text-center text-primary mb-4">Tabel Data Siswa</h1>
+        <h1 class="text-center text-primary mb-4">Daftar Tabel Data Siswa</h1>
         <p class="text-center mb-5">Berikut ini tabel untuk entri data siswa</p>
         
         <a href="/Create/createDataSiswa">
@@ -74,24 +74,13 @@
                       <a href="/tableDataSiswa/update/{{ datasiswa.id }}">
                         <button class="update-btn">Update</button>
                       </a>
-                      <!-- Tombol Delete -->
-                      <button class="delete-btn" onclick="document.getElementById('deletePopup').style.display='block'">
-                        Delete
-                      </button>
 
-                      <!-- Popup Modal -->
-                      <div id="deletePopup" class="popup">
-                        <div class="popup-content">
-                          <p>Are you sure you want to delete this continent?</p>
-                          <form action="/tableDataSiswa/delete/{{ datasiswa.id_siswa }}" method="POST">
-                            <button type="submit" class="confirm-delete">Yes, Delete</button>
-                            <button type="button" class="cancel-btn" onclick="document.getElementById('deletePopup').style.display='none'">
-                              Cancel
-                            </button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
+                    <!-- Delete Button -->
+                    <form action="/tableDataSiswa/delete/{{ datasiswa.id_siswa }}" method="POST" class="d-inline">
+                      <button type="submit" class="delete-btn" onclick="return confirm ('Are you sure you want to delete {{datasiswa.id_siswa}}?');">Delete</button>
+                    </form>
+                    
+                  </div>
                   </td>
                 </tr>
               {% endfor %}

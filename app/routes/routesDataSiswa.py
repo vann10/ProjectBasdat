@@ -8,6 +8,7 @@ routesDataSiswa = Blueprint('routesDataSiswa', __name__)
 def index():
     return render_template('home.html')
 
+#Show ALL 
 @routesDataSiswa.route('/tableDataSiswa')
 def tableDataSiswa():
     # Get the current page number from the query string (default to page 1)

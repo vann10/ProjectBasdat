@@ -68,24 +68,13 @@
                       <a href="/tableAbsensiSiswa/update/{{ absensisiswa.id }}">
                         <button class="update-btn">Update</button>
                       </a>
-                      <!-- Tombol Delete -->
-                      <button class="delete-btn" onclick="document.getElementById('deletePopup').style.display='block'">
-                        Delete
-                      </button>
 
-                      <!-- Popup Modal -->
-                      <div id="deletePopup" class="popup">
-                        <div class="popup-content">
-                          <p>Are you sure you want to delete this continent?</p>
-                          <form action="/tableAbsensiSiswa/delete/{{ absensisiswa.id_absensisiswa }}" method="POST">
-                            <button type="submit" class="confirm-delete">Yes, Delete</button>
-                            <button type="button" class="cancel-btn" onclick="document.getElementById('deletePopup').style.display='none'">
-                              Cancel
-                            </button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
+                    <!-- Delete Button -->
+                    <form action="/tableAbsensiSiswa/delete/{{ absensisiswa.id_absensisiswa }}" method="POST" class="d-inline">
+                      <button type="submit" class="delete-btn" onclick="return confirm ('Are you sure you want to delete {{absensisiswa.id_absensisiswa}}?');">Delete</button>
+                    </form>
+                    
+                  </div>
                   </td>
                 </tr>
               {% endfor %}
