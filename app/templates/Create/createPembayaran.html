@@ -65,8 +65,11 @@
                 <input type="text" class="form-control" id="total_tagihan" name="total_tagihan_Pembayaran" required>
 
                 <label for="status" class="form-label">Status</label>
-                <input type="text" class="form-control" id="status" name="status_Pembayaran" required>
-
+                <select class="form-control" id="status" name="status_Pembayaran" required>
+                  <option value="Belum">Belum</option>
+                  <option value="Lunas">Lunas</option>
+                </select>
+            
                 <label for="tanggal_transaksi" class="form-label">Tanggal Transaksi</label>
                 <input type="date" class="form-control" id="tanggal_transaksi" name="tanggal_transaksi_Pembayaran">
               </div>
@@ -75,7 +78,7 @@
             </form>
     
             <br>
-            <a href="{{ url_for('routesPembayaran.create_Pembayaran') }}" class="btn btn-secondary">Back to Table A List</a>
+            <a href="{{ url_for('routesPembayaran.tablePembayaran') }}" class="btn btn-secondary">Back to Table Pembayaran</a>
         
     </main>
     
