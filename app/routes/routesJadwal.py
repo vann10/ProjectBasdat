@@ -26,13 +26,23 @@ def tableJadwal():
         
         # Execute a query with pagination using OFFSET and FETCH NEXT
         cursor.execute('''
-            SELECT * FROM jadwal
-            ORDER BY id_jadwal  -- or any other column for sorting
+            SELECT 
+                id_jadwal,
+                id_kelas,
+                id_mapel,
+                id_guru, 
+                hari,                       
+                CONVERT(VARCHAR(5), jam_mulai, 108) AS jam_mulai,
+                CONVERT(VARCHAR(5), jam_selesai, 108) AS jam_selesai
+            FROM 
+                jadwal
+            WHERE 
+                jam_mulai IS NOT NULL
+            ORDER BY 
+                id_jadwal
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
         ''', (offset, per_page))
-
-        # cursor.execute('SELECT * FROM TableA')
         
         # Fetch the results
         table = cursor.fetchall()
@@ -66,7 +76,6 @@ def create_Jadwal():
         jadwal_hari  = request.form['hari_Jadwal']
         jadwal_jam_mulai  = request.form['jam_mulai_Jadwal']
         jadwal_jam_selesai  = request.form['jam_selesai_Jadwal']
-
 
         # Get a connection to the database
         conn = create_connection()
