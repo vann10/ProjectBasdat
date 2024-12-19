@@ -27,7 +27,14 @@ def tableDataSiswa():
         
         # Execute a query with pagination using OFFSET and FETCH NEXT
         cursor.execute('''
-            SELECT * FROM datasiswa
+            SELECT id_siswa, nisn, nama_siswa, 
+                CASE 
+                    WHEN jenis_kelamin = 'L' THEN 'Laki-laki' 
+                    WHEN jenis_kelamin = 'P' THEN 'Perempuan'
+                    ELSE 'Tidak Diketahui' 
+                END AS jenis_kelamin,
+                tanggal_lahir, alamat, id_kelas
+            FROM datasiswa
             ORDER BY id_siswa  -- or any other column for sorting
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
@@ -119,3 +126,55 @@ def delete_continent(id_siswa):
         flash('Error: Unable to connect to the database.', 'danger')
     
     return redirect(url_for('routesDataSiswa.tableDataSiswa'))
+
+#Update Data
+@routesDataSiswa.route('/tableDataSiswa/update/<id_siswa>', methods=['GET', 'POST'])
+def update_DataSiswa(id_siswa):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_nisn = request.form['nisn_DataSiswa']
+                new_nama_siswa = request.form['nama_siswa_DataSiswa']
+                new_jenis_kelamin = request.form['jenis_kelamin_DataSiswa']
+                new_tanggal_lahir = request.form['tanggal_lahir_DataSiswa']
+                new_alamat = request.form['alamat_DataSiswa']
+                new_id_kelas = request.form['id_kelas_DataSiswa']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE DataSiswa 
+                               SET  nisn = ?, nama_siswa = ?, jenis_kelamin = ?, tanggal_lahir = ?, alamat = ?, id_kelas = ?
+                                WHERE id_siswa = ?''', (new_nisn, new_nama_siswa, new_jenis_kelamin, new_tanggal_lahir, new_alamat, new_id_kelas, id_siswa))
+                conn.commit()
+
+                flash(f'{id_siswa} updated successfully!', 'success')
+                return redirect(url_for('routesDataSiswa.tableDataSiswa'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT nisn, nama_siswa, jenis_kelamin, tanggal_lahir, alamat, id_kelas FROM DataSiswa WHERE id_siswa = ?', (id_siswa,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesDataSiswa.tableDataSiswa'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateDataSiswa.html', DataSiswa={
+                'nisn': table[0],
+                'nama_siswa': table[1],
+                'jenis_kelamin': table[2],
+                'tanggal_lahir': table[3],
+                'alamat': table[4],
+                'id_kelas': table[5]
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesDataSiswa.tableDataSiswa'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesDataSiswa.continents'))

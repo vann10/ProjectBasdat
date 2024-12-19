@@ -28,7 +28,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #1e3a8a;
-    color: var(--text);
+    color: whitesmoke;
     padding: 1rem 5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: sticky;
@@ -67,7 +67,7 @@ body {
 }
 
 .nav-item a {
-    color: var(--text);
+    color: whitesmoke;
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 500;
@@ -167,6 +167,7 @@ input:checked + .slider:before {
 
 .dark-mode .navbar {
     background-color: var(--second);
+    color: var(--text);
 }
 
 .dark-mode .btn {
@@ -183,6 +184,13 @@ input:checked + .slider:before {
     color: var(--text);
     border-radius: 10px;
     margin-bottom: 2rem;
+}
+
+.dark-mode .nav-item a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 /* Main Content */

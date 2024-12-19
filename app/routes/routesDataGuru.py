@@ -26,11 +26,19 @@ def tableDataGuru():
         
         # Execute a query with pagination using OFFSET and FETCH NEXT
         cursor.execute('''
-            SELECT * FROM dataguru
+            SELECT id_guru, nuptk, nama_guru, 
+                CASE 
+                    WHEN jenis_kelamin = 'L' THEN 'Laki-laki' 
+                    WHEN jenis_kelamin = 'P' THEN 'Perempuan'
+                    ELSE 'Tidak Diketahui' 
+                END AS jenis_kelamin,
+                tanggal_lahir, alamat
+            FROM dataguru
             ORDER BY id_guru  -- or any other column for sorting
             OFFSET ? ROWS
             FETCH NEXT ? ROWS ONLY
         ''', (offset, per_page))
+
 
         # cursor.execute('SELECT * FROM TableA')
         
@@ -118,3 +126,53 @@ def delete_continent(id_guru):
         flash('Error: Unable to connect to the database.', 'danger')
     
     return redirect(url_for('routesDataGuru.tableDataGuru'))
+
+#Update Data
+@routesDataGuru.route('/tableDataGuru/update/<id_guru>', methods=['GET', 'POST'])
+def update_DataGuru(id_guru):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_nuptk = request.form['nuptk_DataGuru']
+                new_nama_guru = request.form['nama_guru_DataGuru']
+                new_jenis_kelamin = request.form['jenis_kelamin_DataGuru']
+                new_tanggal_lahir = request.form['tanggal_lahir_DataGuru']
+                new_alamat = request.form['alamat_DataGuru']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE DataGuru 
+                               SET  nuptk = ?, nama_guru = ?, jenis_kelamin = ?, tanggal_lahir = ?, alamat = ?
+                                WHERE id_guru = ?''', (new_nuptk, new_nama_guru, new_jenis_kelamin, new_tanggal_lahir, new_alamat, id_guru))
+                conn.commit()
+
+                flash(f'{id_guru} updated successfully!', 'success')
+                return redirect(url_for('routesDataGuru.tableDataGuru'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT nuptk, nama_guru, jenis_kelamin, tanggal_lahir, alamat FROM DataGuru WHERE id_guru = ?', (id_guru,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesDataGuru.tableDataGuru'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateDataGuru.html', DataGuru={
+                'nuptk': table[0],
+                'nama_guru': table[1],
+                'jenis_kelamin': table[2],
+                'tanggal_lahir': table[3],
+                'alamat': table[4]
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesDataGuru.tableDataGuru'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesDataGuru.continents'))
