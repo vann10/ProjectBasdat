@@ -92,40 +92,52 @@ def create_AbsensiGuru():
     return render_template('Create/createAbsGuru.html')
 
 #Update Data
-@routesAbsensiGuru.route('/tableA/update/<id>', methods=['GET', 'POST'])
-def update_tableA(id):
+@routesAbsensiGuru.route('/tableAbsensiGuru/update/<id_absensiguru>', methods=['GET', 'POST'])
+def update_AbsensiGuru(id_absensiguru):
     conn = create_connection()
     if conn:
         cursor = conn.cursor()
         try:
             if request.method == 'POST':
                 # Get updated data from the form
-                new_name = request.form['nameTableA']
-
+                new_id_guru = request.form['id_guru_AbsensiGuru']
+                new_tanggal = request.form['tanggal_AbsensiGuru']
+                new_status = request.form['status_AbsensiGuru']
+                
                 # Update the tableA in the database
-                cursor.execute('UPDATE tableA SET name = ? WHERE id = ?', (new_name, id))
+                cursor.execute('''UPDATE AbsensiGuru 
+                               SET  id_guru = ?, tanggal = ?, status = ?
+                                WHERE id_absensiguru = ?''', (new_id_guru, new_tanggal, new_status, id_absensiguru))
                 conn.commit()
 
-                flash('Table A updated successfully!', 'success')
-                return redirect(url_for('routes.tableA'))
+                flash(f'{id_absensiguru} updated successfully!', 'success')
+                return redirect(url_for('routesAbsensiGuru.tableAbsensiGuru'))
 
             # For GET request, fetch current data to pre-fill the form
-            cursor.execute('SELECT name FROM tableA WHERE id = ?', (id))
+            cursor.execute('SELECT id_guru, tanggal, status FROM AbsensiGuru WHERE id_absensiguru = ?', (id_absensiguru,))
             table = cursor.fetchone()
             if not table:
                 flash('Table not found!', 'danger')
-                return redirect(url_for('routes.tableA'))
+                return redirect(url_for('routesAbsensiGuru.tableAbsensiGuru'))
 
             # Pass the current data to the form
-            return render_template('editTableA.html', table={'name': table[0]})
+            return render_template('/Update/updateAbsGuru.html', AbsensiGuru={
+                'id_guru': table[0],
+                'tanggal': table[1],
+                'status': table[2]
+                })
         except Exception as e:
             flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesAbsensiGuru.tableAbsensiGuru'))
         finally:
             cursor.close()
             conn.close()
     else:
         flash('Error: Unable to connect to the database.', 'danger')
-        return redirect(url_for('routes.continents'))
+        return redirect(url_for('routesAbsensiGuru.continents'))
+    
+    flash('Unexpected error occurred.', 'danger')
+    return redirect(url_for('routesAbsensiGuru.AbsensiGuru'))
 
 # Delete Data
 @routesAbsensiGuru.route('/tableAbsensiGuru/delete/<id_absensiguru>', methods=['POST'])
