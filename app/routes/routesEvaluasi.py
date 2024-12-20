@@ -122,33 +122,49 @@ def update_Evaluasi(id_evaluasi):
         try:
             if request.method == 'POST':
                 # Get updated data from the form
+                new_id_siswa = request.form['id_siswa_Evaluasi']
+                new_rerata_kehadiran = request.form['rerata_kehadiran_Evaluasi']
+                new_rerata_nilai = request.form['rerata_nilai_Evaluasi']
 
-                new_evaluasi_id_siswa = request.form['id_siswa_Evaluasi']
-                new_evaluasi_rerata_kehadiran = request.form['rerata_kehadiran_Evaluasi']
-                new_evaluasi_rerata_nilai = request.form['rerata_nilai_Evaluasi']
-                
-                # Update the tableA in the database
+                # Determine the new status based on the provided logic
+                if float(new_rerata_kehadiran) >= 90 and float(new_rerata_nilai) >= 85:
+                    new_status = 'Sangat Baik'
+                elif (float(new_rerata_kehadiran) >= 80 and float(new_rerata_nilai) >= 75) and (
+                        float(new_rerata_kehadiran) < 90 or float(new_rerata_nilai) < 85):
+                    new_status = 'Baik'
+                elif (float(new_rerata_kehadiran) >= 70 and float(new_rerata_nilai) >= 60) and (
+                        float(new_rerata_kehadiran) < 80 or float(new_rerata_nilai) < 75):
+                    new_status = 'Cukup'
+                elif float(new_rerata_kehadiran) < 70 or float(new_rerata_nilai) < 60:
+                    new_status = 'Kurang'
+                else:
+                    new_status = 'Tidak Valid'
+
+                # Update the table in the database
                 cursor.execute('''UPDATE Evaluasi 
-                               SET  id_siswa = ?, rerata_kehadiran = ?, rerata_nilai = ?
-                                WHERE id_siswa = ?''', (new_evaluasi_id_siswa, new_evaluasi_rerata_kehadiran, new_evaluasi_rerata_nilai))
+                               SET id_siswa = ?, status = ?, rerata_kehadiran = ?, rerata_nilai = ?
+                               WHERE id_evaluasi = ?''', 
+                               (new_id_siswa, new_status, new_rerata_kehadiran, new_rerata_nilai, id_evaluasi))
                 conn.commit()
 
                 flash(f'{id_evaluasi} updated successfully!', 'success')
                 return redirect(url_for('routesEvaluasi.tableEvaluasi'))
 
             # For GET request, fetch current data to pre-fill the form
-            cursor.execute('SELECT id_siswa, rerata_kehadiran, rerata_nilai FROM Evaluasi WHERE id_evaluasi = ?', (id_evaluasi,))
+            cursor.execute('SELECT id_siswa, status, rerata_kehadiran, rerata_nilai FROM Evaluasi WHERE id_evaluasi = ?', (id_evaluasi,))
             table = cursor.fetchone()
             if not table:
-                flash('Table not found!', 'danger')
+                flash('Record not found!', 'danger')
                 return redirect(url_for('routesEvaluasi.tableEvaluasi'))
 
             # Pass the current data to the form
             return render_template('/Update/updateEvaluasi.html', Evaluasi={
                 'id_siswa': table[0],
-                'rerata_kehadiran': table[1],
-                'rerata_nilai': table[2],
-                })
+                'status': table[1],
+                'rerata_kehadiran': table[2],
+                'rerata_nilai': table[3]
+            })
+
         except Exception as e:
             flash(f'Error: {str(e)}', 'danger')
             return redirect(url_for('routesEvaluasi.tableEvaluasi'))
@@ -157,7 +173,8 @@ def update_Evaluasi(id_evaluasi):
             conn.close()
     else:
         flash('Error: Unable to connect to the database.', 'danger')
-        return redirect(url_for('routesEvaluasi.continents'))
+        return redirect(url_for('routesEvaluasi.tableEvaluasi'))
+
 
 # Delete Data
 @routesEvaluasi.route('/tableEvaluasi/delete/<id_evaluasi>', methods=['POST'])

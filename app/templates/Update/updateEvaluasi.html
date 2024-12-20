@@ -45,7 +45,10 @@
             <form method="POST">
                 <div class="mb-3">
                   <label for="id_siswa" class="form-label">Id Siswa</label>
-                  <input type="text" class="form-control" id="id_siswa" name="id_siswa_Evaluasi" value="{{Evaluasi.id_siswa}}" required>
+                  <input type="text" class="form-control" id="id_siswa" name="id_siswa_Evaluasi" value="{{Evaluasi.id_siswa}}" readonly>
+
+                  <label for="status" class="form-label">Status</label>
+                  <input type="text" class="form-control" id="status" name="status_Evaluasi" value="{{Evaluasi.status}}" readonly>
                 
                   <label for="rerata_kehadiran" class="form-label">Rerata Kehadiran</label>
                   <input type="number" class="form-control" id="rerata_kehadiran" name="rerata_kehadiran_Evaluasi" value="{{Evaluasi.rerata_kehadiran}}" required>
