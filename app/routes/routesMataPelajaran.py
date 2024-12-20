@@ -89,6 +89,52 @@ def create_MataPelajaran():
     # Render the form for GET request
     return render_template('Create/createMataPelajaran.html')
 
+#Update Data
+@routesMataPelajaran.route('/tableMataPelajaran/update/<id_mapel>', methods=['GET', 'POST'])
+def update_MataPelajaran(id_mapel):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_mata_pelajaran = request.form['mata_pelajaran_MataPelajaran']
+                new_kelas = request.form['kelas_MataPelajaran']
+                new_id_guru  = request.form['id_guru_MataPelajaran']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE MataPelajaran
+                               SET  mata_pelajaran = ?, kelas = ?, id_guru = ?
+                               WHERE id_mapel = ?''', (new_mata_pelajaran, new_kelas, new_id_guru, id_mapel))
+                conn.commit()
+
+                flash(f'{id_mapel} updated successfully!', 'success')
+                return redirect(url_for('routesMataPelajaran.tableMataPelajaran'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT mata_pelajaran, kelas, id_guru FROM MataPelajaran WHERE id_mapel = ?', (id_mapel,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesMataPelajaran.tableMataPelajaran'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateMataPelajaran.html', MataPelajaran={
+                'mata_pelajaran': table[0],
+                'kelas': table[1],
+                'id_guru': table[2]
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesMataPelajaran.tableMataPelajaran'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesMataPelajaran.continents'))
+
 # Delete Data
 @routesMataPelajaran.route('/tableMataPelajaran/delete/<id_mapel>', methods=['POST'])
 def delete_continent(id_mapel):
