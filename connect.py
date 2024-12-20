@@ -5,7 +5,8 @@ import os
 def create_connection():
 
     #server = 'MSI\VSERVER'
-    server = 'HANADHIRA'   # Ubah sesuai dengan nama server kalian     #
+    #server = 'HANADHIRA'   # Ubah sesuai dengan nama server kalian     #
+    server = 'DAFFA'
     database = 'SMAN1Surakarta'        # Ubah sesuai dengan nama database kalian   #
 
     connection_string = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database}'

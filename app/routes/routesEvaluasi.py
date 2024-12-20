@@ -114,6 +114,51 @@ def create_Evaluasi():
     # Render the form for GET request
     return render_template('Create/createEvaluasi.html')
 
+@routesEvaluasi.route('/tableEvaluasi/update/<id_evaluasi>', methods=['GET', 'POST'])
+def update_Evaluasi(id_evaluasi):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_evaluasi_id_siswa = request.form['id_siswa_Evaluasi']
+                new_evaluasi_rerata_kehadiran = request.form['rerata_kehadiran_Evaluasi']
+                new_evaluasi_rerata_nilai = request.form['rerata_nilai_Evaluasi']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE Evaluasi 
+                               SET  id_siswa = ?, rerata_kehadiran = ?, rerata_nilai = ?
+                                WHERE id_siswa = ?''', (new_evaluasi_id_siswa, new_evaluasi_rerata_kehadiran, new_evaluasi_rerata_nilai))
+                conn.commit()
+
+                flash(f'{id_evaluasi} updated successfully!', 'success')
+                return redirect(url_for('routesEvaluasi.tableEvaluasi'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT id_siswa, rerata_kehadiran, rerata_nilai FROM Evaluasi WHERE id_evaluasi = ?', (id_evaluasi,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesEvaluasi.tableEvaluasi'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateEvaluasi.html', Evaluasi={
+                'id_siswa': table[0],
+                'rerata_kehadiran': table[1],
+                'rerata_nilai': table[2],
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesEvaluasi.tableEvaluasi'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesEvaluasi.continents'))
+
 # Delete Data
 @routesEvaluasi.route('/tableEvaluasi/delete/<id_evaluasi>', methods=['POST'])
 def delete_continent(id_evaluasi):
