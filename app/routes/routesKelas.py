@@ -88,6 +88,50 @@ def create_Kelas():
     # Render the form for GET request
     return render_template('Create/createKelas.html')
 
+#Update Data
+@routesKelas.route('/tableKelas/update/<id_kelas>', methods=['GET', 'POST'])
+def update_Kelas(id_kelas):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_id_guru = request.form['id_guru_Kelas']
+                new_kelas = request.form['kelas_Kelas']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE Kelas
+                               SET  id_guru = ?, kelas = ?
+                               WHERE id_kelas = ?''', (new_id_guru, new_kelas, id_kelas))
+                conn.commit()
+
+                flash(f'{id_kelas} updated successfully!', 'success')
+                return redirect(url_for('routesKelas.tableKelas'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT id_guru, kelas FROM Kelas WHERE id_kelas = ?', (id_kelas,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesKelas.tableKelas'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateKelas.html', Kelas={
+                'id_guru': table[0],
+                'kelas': table[1],
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesKelas.tableKelas'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesKelas.continents'))
+
 # Delete Data
 @routesKelas.route('/tableKelas/delete/<id_kelas>', methods=['POST'])
 def delete_continent(id_kelas):
