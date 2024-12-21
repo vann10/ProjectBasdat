@@ -387,5 +387,81 @@ footer {
     color: white;
   }
   
-  
-  
+
+/* Dark Mode */
+.dark-mode {
+    background-color: #0A1930;
+    color: var(--third);
+}
+
+.dark-mode html {
+    background-color: #0A1930;
+}
+
+.dark-mode .card {
+    background-color: #0A1930;
+    outline-style: solid;
+    outline-color: #65B2B8;
+    color: #f4f4f9;
+}
+
+.dark-mode .navbar {
+    background-color: var(--second);
+    color: var(--text);
+}
+
+.dark-mode .btn {
+    background-color: #0A1930;
+    outline-style: solid;
+    outline-color: #65B2B8;
+    color: #BDC7E0;
+}
+
+.dark-mode .hero {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: linear-gradient(90deg, var(--shadow) 0%, var(--second) 55%, var(--third));
+    color: var(--text);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.dark-mode .nav-item a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.dark-mode .card-text {
+    color: var(--first)
+}
+
+.dark-mode .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color:var(--third);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    color: var(--text);
+}
+
+.dark-mode .table thead {
+    background-color: var(--third);
+    color: var(--text);
+}
+
+.dark-mode .table th, .table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--text);
+    text-align: left;
+}
+
+.dark-mode .table-striped tbody tr:nth-child(odd) {
+    background-color: var(--second);
+}
+
+.dark-mode .table-hover tbody tr:hover {
+    background-color: var(--shadow);
+}

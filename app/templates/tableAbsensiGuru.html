@@ -117,5 +117,36 @@
     <footer>
       <p>&copy; 2024 SMAN 1 SURAKARTA DB</p>
     </footer>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById('navbarMenu');
+        menu.classList.toggle('open');
+      }
+  
+      function toggleTheme() {
+        const isDarkMode = document.getElementById('themeToggle').checked;
+        if (isDarkMode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }
+  
+      // Optional: Save the theme preference in localStorage
+      window.addEventListener('load', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const toggle = document.getElementById('themeToggle');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          toggle.checked = true;
+        }
+  
+        toggle.addEventListener('change', () => {
+          const newTheme = toggle.checked ? 'dark' : 'light';
+          localStorage.setItem('theme', newTheme);
+        });
+      });
+    </script>
   </body>
 </html>

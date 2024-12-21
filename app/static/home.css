@@ -193,6 +193,10 @@ input:checked + .slider:before {
     font-weight: 500;
 }
 
+.dark-mode .card-text {
+    color: var(--first)
+}
+
 /* Main Content */
 main {
     flex: 1;
@@ -280,9 +284,6 @@ main {
     color: #555;
 }
 
-.dark-mode .card-text {
-    color: var(--first)
-}
 
 .btn {
     display: inline-block;
