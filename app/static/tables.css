@@ -5,6 +5,7 @@
     --third: #0A1930;
     --text: #BDC7E0;
     --shadow: #3a9198;
+    --table: #0e1e36;
     color-scheme: light dark;
 }
 
@@ -391,7 +392,7 @@ footer {
 /* Dark Mode */
 .dark-mode {
     background-color: #0A1930;
-    color: var(--third);
+    color: var(--text);
 }
 
 .dark-mode html {
@@ -422,7 +423,7 @@ footer {
     padding: 4rem 1rem;
     background: linear-gradient(90deg, var(--shadow) 0%, var(--second) 55%, var(--third));
     color: var(--text);
-    border-radius: 10px;
+    border-top-color: var(--first);
     margin-bottom: 2rem;
 }
 
@@ -441,14 +442,15 @@ footer {
     width: 100%;
     border-collapse: collapse;
     margin-top: 2rem;
-    background-color:var(--third);
+    background: var(--table);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     color: var(--text);
+    border-radius: 10px;
 }
 
 .dark-mode .table thead {
-    background-color: var(--third);
+    background-color: var(--table);
     color: var(--text);
 }
 
@@ -456,6 +458,8 @@ footer {
     padding: 0.75rem 1rem;
     border: 1px solid var(--text);
     text-align: left;
+    border-color: var(--third);
+    border-style: solid;
 }
 
 .dark-mode .table-striped tbody tr:nth-child(odd) {
@@ -464,4 +468,8 @@ footer {
 
 .dark-mode .table-hover tbody tr:hover {
     background-color: var(--shadow);
+}
+
+.dark-mode .text-primary {
+    color: var(--text);
 }

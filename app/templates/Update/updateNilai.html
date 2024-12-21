@@ -45,13 +45,13 @@
             <form method="POST">
                 <div class="mb-3">
                   <label for="id_mapel" class="form-label">Id Mapel</label>
-                  <input type="text" class="form-control" id="id_mapel" name="id_mapel_Nilai" value="{{Nilai.id_mapel}}" required>
+                  <input type="text" class="form-control" id="id_mapel" name="id_mapel_Nilai" value="{{Nilai.id_mapel}}" readonly>
 
                   <label for="id_siswa" class="form-label">Id Siswa</label>
                   <input type="text" class="form-control" id="id_siswa" name="id_siswa_Nilai" value="{{Nilai.id_siswa}}" required>
 
                   <label for="nilai_akhir" class="form-label">Nilai</label>
-                  <input type="text" class="form-control" id="nilai_akhir" name="nilai_akhir_Nilai" value="{{Nilai.nilai_akhir}}" required>
+                  <input type="number <= 100" class="form-control" id="nilai_akhir" name="nilai_akhir_Nilai" value="{{Nilai.nilai_akhir}}" required>
                 </div>
         
               <button type="submit" class="btn btn-primary">Update</button>
