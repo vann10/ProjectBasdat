@@ -92,6 +92,54 @@ def create_Pembayaran():
     # Render the form for GET request
     return render_template('Create/createPembayaran.html')
 
+#Update Data
+@routesPembayaran.route('/tablePembayaran/update/<id_pembayaran>', methods=['GET', 'POST'])
+def update_Pembayaran(id_pembayaran):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_id_siswa = request.form['id_siswa_Pembayaran']
+                new_total_tagihan = request.form['total_tagihan_Pembayaran']
+                new_status = request.form['status_Pembayaran']
+                new_tanggal_transaksi  = request.form['tanggal_transaksi_Pembayaran']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE Pembayaran
+                               SET  id_siswa = ?, total_tagihan = ?, status = ?, tanggal_transaksi = ?
+                               WHERE id_pembayaran = ?''', (new_id_siswa, new_total_tagihan, new_status, new_tanggal_transaksi, id_pembayaran))
+                conn.commit()
+
+                flash(f'{id_pembayaran} updated successfully!', 'success')
+                return redirect(url_for('routesPembayaran.tablePembayaran'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT id_siswa, total_tagihan, status, tanggal_transaksi FROM Pembayaran WHERE id_pembayaran = ?', (id_pembayaran,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesPembayaran.tablePembayaran'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updatePembayaran.html', Pembayaran={
+                'id_siswa': table[0],
+                'total_tagihan': table[1],
+                'status': table[2],
+                'tanggal_transaksi': table[3]
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesPembayaran.tablePembayaran'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesPembayaran.continents'))
+
 # Delete Data
 @routesPembayaran.route('/tablePembayaran/delete/<id_pembayaran>', methods=['POST'])
 def delete_continent(id_pembayaran):
