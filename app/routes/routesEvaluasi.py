@@ -114,6 +114,7 @@ def create_Evaluasi():
     # Render the form for GET request
     return render_template('Create/createEvaluasi.html')
 
+#Update Data
 @routesEvaluasi.route('/tableEvaluasi/update/<id_evaluasi>', methods=['GET', 'POST'])
 def update_Evaluasi(id_evaluasi):
     conn = create_connection()

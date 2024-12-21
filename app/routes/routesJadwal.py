@@ -128,3 +128,55 @@ def delete_continent(id_jadwal):
         flash('Error: Unable to connect to the database.', 'danger')
     
     return redirect(url_for('routesJadwal.tableJadwal'))
+
+#Update Data
+@routesJadwal.route('/tableJadwal/update/<id_jadwal>', methods=['GET', 'POST'])
+def update_Jadwal(id_jadwal):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_id_kelas  = request.form['id_kelas_Jadwal']
+                new_id_mapel  = request.form['id_mapel_Jadwal']
+                new_id_guru  = request.form['id_guru_Jadwal']
+                new_hari  = request.form['hari_Jadwal']
+                new_jam_mulai  = request.form['jam_mulai_Jadwal']
+                new_jam_selesai  = request.form['jam_selesai_Jadwal']
+                
+                # Update the tableJadwal in the database
+                cursor.execute('''UPDATE Jadwal
+                               SET id_kelas = ?, id_mapel = ?, id_guru = ?, hari = ?, jam_mulai = ?, jam_selesai = ?
+                               WHERE id_jadwal = ?''', (new_id_kelas, new_id_mapel, new_id_guru, new_hari, new_jam_mulai, new_jam_selesai, id_jadwal))
+                conn.commit()
+
+                flash(f'{id_jadwal} updated successfully!', 'success')
+                return redirect(url_for('routesJadwal.tableJadwal'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT id_kelas, id_mapel, id_guru, hari, jam_mulai, jam_selesai FROM Jadwal WHERE id_jadwal = ?', (id_jadwal,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesJadwal.tableJadwal'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateJadwal.html', Jadwal={
+                'id_kelas': table[0],
+                'id_mapel': table[1],
+                'id_guru': table[2],
+                'hari': table[3],
+                'jam_mulai': table[4],
+                'jam_selesai': table[5],
+            })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesJadwal.tableJadwal'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesJadwal.tableJadwal'))
