@@ -91,6 +91,52 @@ def create_Nilai():
     # Render the form for GET request
     return render_template('Create/createNilai.html')
 
+#Update Data
+@routesNilai.route('/tableNilai/update/<id_nilai>', methods=['GET', 'POST'])
+def update_Nilai(id_nilai):
+    conn = create_connection()
+    if conn:
+        cursor = conn.cursor()
+        try:
+            if request.method == 'POST':
+                # Get updated data from the form
+
+                new_id_mapel = request.form['id_mapel_Nilai']
+                new_id_siswa = request.form['id_siswa_Nilai']
+                new_nilai_akhir  = request.form['nilai_akhir_Nilai']
+                
+                # Update the tableA in the database
+                cursor.execute('''UPDATE Nilai
+                               SET  id_mapel = ?, id_siswa = ?, nilai_akhir = ?
+                               WHERE id_nilai = ?''', (new_id_mapel, new_id_siswa, new_nilai_akhir, id_nilai))
+                conn.commit()
+
+                flash(f'{id_nilai} updated successfully!', 'success')
+                return redirect(url_for('routesNilai.tableNilai'))
+
+            # For GET request, fetch current data to pre-fill the form
+            cursor.execute('SELECT id_mapel, id_siswa, nilai_akhir FROM Nilai WHERE id_nilai = ?', (id_nilai,))
+            table = cursor.fetchone()
+            if not table:
+                flash('Table not found!', 'danger')
+                return redirect(url_for('routesNilai.tableNilai'))
+
+            # Pass the current data to the form
+            return render_template('/Update/updateNilai.html', Nilai={
+                'id_mapel': table[0],
+                'id_siswa': table[1],
+                'nilai_akhir': table[2]
+                })
+        except Exception as e:
+            flash(f'Error: {str(e)}', 'danger')
+            return redirect(url_for('routesNilai.tableNilai'))
+        finally:
+            cursor.close()
+            conn.close()
+    else:
+        flash('Error: Unable to connect to the database.', 'danger')
+        return redirect(url_for('routesNilai.continents'))
+
 # Delete Data
 @routesNilai.route('/tableNilai/delete/<id_nilai>', methods=['POST'])
 def delete_continent(id_nilai):
