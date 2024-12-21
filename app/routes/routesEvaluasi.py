@@ -101,7 +101,7 @@ def create_Evaluasi():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('TableA added successfully!', 'success')
+                flash(f'{evaluasi_id_evaluasi} added successfully!', 'success')
                 return redirect(url_for('routesEvaluasi.tableEvaluasi'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message

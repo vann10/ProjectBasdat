@@ -90,7 +90,7 @@ def create_Jadwal():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('Table Kelas added successfully!', 'success')
+                flash(f'{jadwal_id_jadwal} added successfully!', 'success')
                 return redirect(url_for('routesJadwal.tableJadwal'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message

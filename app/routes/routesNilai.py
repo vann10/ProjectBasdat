@@ -78,7 +78,7 @@ def create_Nilai():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('Table Nilai added successfully!', 'success')
+                flash(f'{Nilai_id_nilai} added successfully!', 'success')
                 return redirect(url_for('routesNilai.tableNilai'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message

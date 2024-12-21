@@ -76,7 +76,7 @@ def create_MataPelajaran():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('Table Mata Pelajaran added successfully!', 'success')
+                flash(f'{mataPelajaran_id_mapel} added successfully!', 'success')
                 return redirect(url_for('routesMataPelajaran.tableMataPelajaran'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message

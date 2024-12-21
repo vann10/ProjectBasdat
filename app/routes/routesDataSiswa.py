@@ -88,7 +88,7 @@ def create_DataSiswa():
                 conn.commit()  # Commit the transaction
                 
                 # Redirect to the tableA list with a success message
-                flash('TableA added successfully!', 'success')
+                flash(f'{dataSiswa_id_siswa} added successfully!', 'success')
                 return redirect(url_for('routesDataSiswa.tableDataSiswa'))
             except Exception as e:
                 flash(f'Error: {str(e)}', 'danger')  # Flash error message
