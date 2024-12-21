@@ -106,6 +106,8 @@ def update_Pembayaran(id_pembayaran):
                 new_total_tagihan = request.form['total_tagihan_Pembayaran']
                 new_status = request.form['status_Pembayaran']
                 new_tanggal_transaksi  = request.form['tanggal_transaksi_Pembayaran']
+                if not new_tanggal_transaksi:  # Jika kosong, set None
+                    new_tanggal_transaksi = None
                 
                 # Update the tableA in the database
                 cursor.execute('''UPDATE Pembayaran
